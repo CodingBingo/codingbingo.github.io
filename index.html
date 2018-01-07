@@ -374,7 +374,7 @@
       
         
           
-            <p>从接触Java开始，大约已经有大约5年了吧。工作快一年了，大部分的时间基本都是在做业务，也没啥时间搞那些很高深的技术，就想着重新认识一下Java。<br>后续章节都是根据JDK 1.7的版本分析的源代码，如有不妥的地方欢迎大家批评指正。</p>
+            <p>从接触Java开始，大约已经有大约5年了吧。工作快一年多了，大部分的时间基本都是在做业务，也没啥时间搞那些很高深的技术，就想着重新认识一下Java。<br>后续章节都是根据JDK 1.7的版本分析的源代码，如有不妥的地方欢迎大家批评指正。</p>
 <h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>String本质上还是由字符数组构成的，类本身实现了三个接口Serializable、Comparable、CharSequence。</p>
 <ul>
 <li>Serializable<br>  这里简单说一下Serializabl这个接口，本身其实没有任何属性和方法，所以如果某个类需要序列化（序列化在Java中主要是保证在各个平台的一致性。），只需要实现这个接口接口。</li>
@@ -398,8 +398,12 @@
 </blockquote>
 <p>  其实这个问题问的完全没啥意思。一共两个，一个是”aaa”,一个是指向”aaa”的引用str。[当然，如果内存里面本来就有”aaa”，那就一个咯。]</p>
 </li>
+<li><p>意外知识<br>  我以前从来没有像下面这样的代码这样写过，挺好玩哈。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">outer:&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        System.out.println(<span class="string">"i:"</span> + i);</span><br><span class="line">        inner:&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">10</span>; t &lt; <span class="number">20</span>; t++) &#123;</span><br><span class="line">                System.out.println(<span class="string">"t:"</span> + t);</span><br><span class="line">                <span class="keyword">if</span> (t &gt;= <span class="number">15</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span> outer;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-
+<h3 id="String、StringBuffer、StringBuilder"><a href="#String、StringBuffer、StringBuilder" class="headerlink" title="String、StringBuffer、StringBuilder"></a>String、StringBuffer、StringBuilder</h3><p>这里看一下我们经常一起比较的三个字符串相关的类。<strong>String类是一个不可变类</strong>，也就是说如果有一个字符串是String类型的，那么如果想改变这个字符串的长度是不行的。<strong>StringBuffer和StringBuilder都是可变的</strong>，它们都是继承自AbstractStringBuilder，但是有个比较大的不同点事，StringBuffer几乎所有的方法都是synchronized的，也就是说<strong>StringBuffer是线程安全的，但是StringBuilder是线程不安全</strong>。我们都知道synchronize是要以性能为代价来保证线程安全的，所以说如果是单线程状态下，还是推荐使用String或者StringBuilder的。另外，一般情况下，StringBuilder和StringBuffer每次需要扩容的时候都会扩容到原来长度的两倍加二（即：oldSize * 2 + 2,这个是经验值哈，空对象的初始大小都是16）</p>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><h3 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h3>
           
         
       
