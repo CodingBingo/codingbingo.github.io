@@ -259,6 +259,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://codingbingo.github.io/2018/04/04/Java重头再来-垃圾收集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CodingBingo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/15016273?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CodingBingo's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/04/Java重头再来-垃圾收集/" itemprop="url">Java重头再来-垃圾收集</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-04T10:53:34+08:00">
+                2018-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/04/Java重头再来-垃圾收集/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/04/04/Java重头再来-垃圾收集/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/04/04/Java重头再来-垃圾收集/" class="leancloud_visitors" data-flag-title="Java重头再来-垃圾收集">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>都说Java的垃圾我们不需要管，但是垃圾收集之类的相关知识我们还是有必要了解一下的，做到知己知彼百战不殆。</p>
+<h2 id="回收算法简介"><a href="#回收算法简介" class="headerlink" title="回收算法简介"></a>回收算法简介</h2><ul>
+<li><p>标记清理算法</p>
+<p>  这个算法相对而言是最近简单的，标记阶段标识出哪些内存可以被清理，在清理阶段将这些内存清理掉。算法的优点显而易见–快速高效，但是缺点也比较明显，容易产生内存碎片，导致后续分配大对象空间的时候没有连续空间，进而引发Full GC。</p>
+</li>
+<li><p>复制算法</p>
+<p>  把内存一份为二，每次用其中一块内存，每次内存清理的时候，将那块内存上还存活的对象复制到另外一块内存上，这样就不会出现内存碎片了，但是内存的利用率太低了。</p>
+</li>
+<li><p>标记整理算法</p>
+<p>  标记整理算法算是标记清理算法和复制算法的结合体，在标记清理完垃圾内存后，会对存留下来的对象做一次整理，这样就能避免产生内存碎片的问题。</p>
+</li>
+</ul>
+<h2 id="结构分析"><a href="#结构分析" class="headerlink" title="结构分析"></a>结构分析</h2><p>目前广泛采用的Hotspot JVM主要把新生代内存分成三部分：一块Eden区和两块Survivor区（比例为8:1:1），一般情况下，新的对象都会被分配到Eden区，如果这个时候Eden区满了，就会发生一次Minor GC，还存活的对象将会被转移到Survivor区内，同一时间只有一个Survivor区会和Eden区配合使用，每次Minor GC之后，Survivor区内的对象如果没有被回收掉，它的年龄都会加一，直到一定阈值之后，它会被放到老年代中（默认16）</p>
+<p></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://codingbingo.github.io/2018/02/01/Java重头再来-内存模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -724,8 +901,7 @@
       
         
           
-            <p>最近开始学习机器学习了，但是有时候觉得机器学习相对而言，比较晦涩一点，可能很多同学都会有</p>
-
+            
           
         
       
@@ -973,7 +1149,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
