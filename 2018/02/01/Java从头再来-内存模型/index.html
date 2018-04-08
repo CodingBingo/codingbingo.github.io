@@ -82,17 +82,17 @@
 <meta name="description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java重头再来-内存模型">
-<meta property="og:url" content="https://codingbingo.github.io/2018/02/01/Java重头再来-内存模型/index.html">
+<meta property="og:title" content="Java从头再来-内存模型">
+<meta property="og:url" content="https://codingbingo.github.io/2018/02/01/Java从头再来-内存模型/index.html">
 <meta property="og:site_name" content="CodingBingo&#39;s Blog">
 <meta property="og:description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/9.png">
 <meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/11.png">
 <meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/14.png">
-<meta property="og:updated_time" content="2018-04-08T06:01:31.000Z">
+<meta property="og:updated_time" content="2018-04-08T09:06:49.586Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java重头再来-内存模型">
+<meta name="twitter:title" content="Java从头再来-内存模型">
 <meta name="twitter:description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
 <meta name="twitter:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/9.png">
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://codingbingo.github.io/2018/02/01/Java重头再来-内存模型/"/>
+  <link rel="canonical" href="https://codingbingo.github.io/2018/02/01/Java从头再来-内存模型/"/>
 
 
 
 
 
-  <title>Java重头再来-内存模型 | CodingBingo's Blog</title>
+  <title>Java从头再来-内存模型 | CodingBingo's Blog</title>
   
 
 
@@ -267,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codingbingo.github.io/2018/02/01/Java重头再来-内存模型/">
+    <link itemprop="mainEntityOfPage" href="https://codingbingo.github.io/2018/02/01/Java从头再来-内存模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CodingBingo">
@@ -284,7 +284,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java重头再来-内存模型</h2>
+          <h2 class="post-title" itemprop="name headline">Java从头再来-内存模型</h2>
         
 
         <div class="post-meta">
@@ -337,9 +337,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/01/Java重头再来-内存模型/#comments" itemprop="discussionUrl">
+                <a href="/2018/02/01/Java从头再来-内存模型/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/02/01/Java重头再来-内存模型/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/02/01/Java从头再来-内存模型/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -347,7 +347,7 @@
 
           
           
-             <span id="/2018/02/01/Java重头再来-内存模型/" class="leancloud_visitors" data-flag-title="Java重头再来-内存模型">
+             <span id="/2018/02/01/Java从头再来-内存模型/" class="leancloud_visitors" data-flag-title="Java从头再来-内存模型">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -441,7 +441,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://codingbingo.github.io/2018/02/01/Java重头再来-内存模型/" title="Java重头再来-内存模型">https://codingbingo.github.io/2018/02/01/Java重头再来-内存模型/</a>
+    <a href="https://codingbingo.github.io/2018/02/01/Java从头再来-内存模型/" title="Java从头再来-内存模型">https://codingbingo.github.io/2018/02/01/Java从头再来-内存模型/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -484,8 +484,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/07/Java重头再来-String/" rel="next" title="Java重头再来-String">
-                <i class="fa fa-chevron-left"></i> Java重头再来-String
+              <a href="/2018/01/07/Java从头再来-String/" rel="next" title="Java从头再来-String">
+                <i class="fa fa-chevron-left"></i> Java从头再来-String
               </a>
             
           </div>
@@ -494,8 +494,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/04/Java重头再来-垃圾收集/" rel="prev" title="Java重头再来-垃圾收集">
-                Java重头再来-垃圾收集 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/04/Java从头再来-垃圾收集/" rel="prev" title="Java从头再来-垃圾收集">
+                Java从头再来-垃圾收集 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -587,7 +587,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -825,9 +825,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://codingbingo.github.io/2018/02/01/Java重头再来-内存模型/';
-          this.page.identifier = '2018/02/01/Java重头再来-内存模型/';
-          this.page.title = 'Java重头再来-内存模型';
+          this.page.url = 'https://codingbingo.github.io/2018/02/01/Java从头再来-内存模型/';
+          this.page.identifier = '2018/02/01/Java从头再来-内存模型/';
+          this.page.title = 'Java从头再来-内存模型';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://codingbingo-github-io.disqus.com/embed.js';

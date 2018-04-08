@@ -82,14 +82,14 @@
 <meta name="description" content="都说Java的垃圾我们不需要管，但是垃圾收集之类的相关知识我们还是有必要了解一下的，做到知己知彼百战不殆。 回收算法简介 标记清理算法   这个算法相对而言是最近简单的，标记阶段标识出哪些内存可以被清理，在清理阶段将这些内存清理掉。算法的优点显而易见–快速高效，但是缺点也比较明显，容易产生内存碎片，导致后续分配大对象空间的时候没有连续空间，进而引发Full GC。  复制算法   把内存一份为二">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java重头再来-垃圾收集">
-<meta property="og:url" content="https://codingbingo.github.io/2018/04/04/Java重头再来-垃圾收集/index.html">
+<meta property="og:title" content="Java从头再来-垃圾收集">
+<meta property="og:url" content="https://codingbingo.github.io/2018/04/04/Java从头再来-垃圾收集/index.html">
 <meta property="og:site_name" content="CodingBingo&#39;s Blog">
 <meta property="og:description" content="都说Java的垃圾我们不需要管，但是垃圾收集之类的相关知识我们还是有必要了解一下的，做到知己知彼百战不殆。 回收算法简介 标记清理算法   这个算法相对而言是最近简单的，标记阶段标识出哪些内存可以被清理，在清理阶段将这些内存清理掉。算法的优点显而易见–快速高效，但是缺点也比较明显，容易产生内存碎片，导致后续分配大对象空间的时候没有连续空间，进而引发Full GC。  复制算法   把内存一份为二">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-08T06:01:50.000Z">
+<meta property="og:updated_time" content="2018-04-08T09:07:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java重头再来-垃圾收集">
+<meta name="twitter:title" content="Java从头再来-垃圾收集">
 <meta name="twitter:description" content="都说Java的垃圾我们不需要管，但是垃圾收集之类的相关知识我们还是有必要了解一下的，做到知己知彼百战不殆。 回收算法简介 标记清理算法   这个算法相对而言是最近简单的，标记阶段标识出哪些内存可以被清理，在清理阶段将这些内存清理掉。算法的优点显而易见–快速高效，但是缺点也比较明显，容易产生内存碎片，导致后续分配大对象空间的时候没有连续空间，进而引发Full GC。  复制算法   把内存一份为二">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://codingbingo.github.io/2018/04/04/Java重头再来-垃圾收集/"/>
+  <link rel="canonical" href="https://codingbingo.github.io/2018/04/04/Java从头再来-垃圾收集/"/>
 
 
 
 
 
-  <title>Java重头再来-垃圾收集 | CodingBingo's Blog</title>
+  <title>Java从头再来-垃圾收集 | CodingBingo's Blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://codingbingo.github.io/2018/04/04/Java重头再来-垃圾收集/">
+    <link itemprop="mainEntityOfPage" href="https://codingbingo.github.io/2018/04/04/Java从头再来-垃圾收集/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CodingBingo">
@@ -280,7 +280,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java重头再来-垃圾收集</h2>
+          <h2 class="post-title" itemprop="name headline">Java从头再来-垃圾收集</h2>
         
 
         <div class="post-meta">
@@ -333,9 +333,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/04/Java重头再来-垃圾收集/#comments" itemprop="discussionUrl">
+                <a href="/2018/04/04/Java从头再来-垃圾收集/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/04/04/Java重头再来-垃圾收集/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/04/04/Java从头再来-垃圾收集/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -343,7 +343,7 @@
 
           
           
-             <span id="/2018/04/04/Java重头再来-垃圾收集/" class="leancloud_visitors" data-flag-title="Java重头再来-垃圾收集">
+             <span id="/2018/04/04/Java从头再来-垃圾收集/" class="leancloud_visitors" data-flag-title="Java从头再来-垃圾收集">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -387,8 +387,7 @@
 </li>
 </ul>
 <a id="more"></a>
-<h2 id="结构分析"><a href="#结构分析" class="headerlink" title="结构分析"></a>结构分析</h2><p>目前广泛采用的Hotspot JVM主要把新生代内存分成三部分：一块Eden区和两块Survivor区（比例为8:1:1），一般情况下，新的对象都会被分配到Eden区，如果这个时候Eden区满了，就会发生一次Minor GC，还存活的对象将会被转移到Survivor区内，同一时间只有一个Survivor区会和Eden区配合使用，每次Minor GC之后，Survivor区内的对象如果没有被回收掉，它的年龄都会加一，直到一定阈值之后，它会被放到老年代中（默认16）</p>
-<p></p>
+<h2 id="结构分析"><a href="#结构分析" class="headerlink" title="结构分析"></a>结构分析</h2><p>目前广泛采用的Hotspot JVM主要把新生代内存分成三部分：一块Eden区和两块Survivor区（From Survivor, To Survivor），比例为8:1:1，一般情况下，新的对象都会被分配到Eden区，如果这个时候Eden区满了，就会发生一次Minor GC，还存活的对象将会被转移到Survivor区内，同一时间只有一个Survivor区会和Eden区配合使用，每次Minor GC之后，Survivor区内的对象如果没有被回收掉，它的年龄都会加一，直到一定阈值之后，它会被放到老年代中（默认16）</p>
 
       
     </div>
@@ -438,7 +437,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://codingbingo.github.io/2018/04/04/Java重头再来-垃圾收集/" title="Java重头再来-垃圾收集">https://codingbingo.github.io/2018/04/04/Java重头再来-垃圾收集/</a>
+    <a href="https://codingbingo.github.io/2018/04/04/Java从头再来-垃圾收集/" title="Java从头再来-垃圾收集">https://codingbingo.github.io/2018/04/04/Java从头再来-垃圾收集/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -481,8 +480,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/01/Java重头再来-内存模型/" rel="next" title="Java重头再来-内存模型">
-                <i class="fa fa-chevron-left"></i> Java重头再来-内存模型
+              <a href="/2018/02/01/Java从头再来-内存模型/" rel="next" title="Java从头再来-内存模型">
+                <i class="fa fa-chevron-left"></i> Java从头再来-内存模型
               </a>
             
           </div>
@@ -490,6 +489,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/08/Java从头再来-动态代理/" rel="prev" title="Java从头再来-动态代理">
+                Java从头再来-动态代理 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -580,7 +583,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -818,9 +821,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://codingbingo.github.io/2018/04/04/Java重头再来-垃圾收集/';
-          this.page.identifier = '2018/04/04/Java重头再来-垃圾收集/';
-          this.page.title = 'Java重头再来-垃圾收集';
+          this.page.url = 'https://codingbingo.github.io/2018/04/04/Java从头再来-垃圾收集/';
+          this.page.identifier = '2018/04/04/Java从头再来-垃圾收集/';
+          this.page.title = 'Java从头再来-垃圾收集';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://codingbingo-github-io.disqus.com/embed.js';
