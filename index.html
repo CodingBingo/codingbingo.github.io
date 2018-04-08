@@ -301,6 +301,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -351,9 +373,26 @@
 
       
         
-          
-            
-          
+          <p>在Java动态代理中，有两个比较重要的类：InvocationHandler和Proxy。下面主要看下这两个类的实现：</p>
+<h2 id="InvocationHandler"><a href="#InvocationHandler" class="headerlink" title="InvocationHandler"></a>InvocationHandler</h2><ul>
+<li>注释<br>  InvocationHandler is the interface implemented by the invocation handler of a proxy instance. Each proxy instance has an associated invocation handler. When a method is invoked on a proxy instance, the method invocation is encoded and dispatched to the invoke method of its invocation handler.</li>
+</ul>
+<p>这个接口是所有的动态代理类都需要去实现的，每个代理动态代理都会绑定一个调用handler。当代理对象调用对应方法的时候，这个调用会转发到InvocationHandler中的invoke方法中。</p>
+<ul>
+<li>Invoke方法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>   proxy   被代理对象实例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>   method  对应的方法</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>   args    调用方法所需的参数</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="function">Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><ul>
+<li>注释<br>  Proxy provides static methods for creating dynamic proxy classes and instances, and it is also the superclass of all dynamic proxy classes created by those methods.</li>
+</ul>
+<p>Proxy类主要用于创建代理对象。类里面提供了两种方法创建一个接口的代理类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">InvocationHandler handler = <span class="keyword">new</span> MyInvocationHandler(...);</span><br><span class="line">Class proxyClass = Proxy.getProxyClass(Foo.class.getClassLoader(), Foo.class);</span><br><span class="line">Foo fo = (Foo) proxyClass.getConstructor(InvocationHandler.class).newInstance(handler);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Foo fo = (Foo) Proxy.newProxyInstance(Foo.class.getClassLoader(), <span class="keyword">new</span> Class[] &#123; Foo.class &#125;, handler)</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/08/Java从头再来-动态代理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
