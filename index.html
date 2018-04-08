@@ -373,8 +373,7 @@
 
       
         
-          
-            <p>都说Java的垃圾我们不需要管，但是垃圾收集之类的相关知识我们还是有必要了解一下的，做到知己知彼百战不殆。</p>
+          <p>都说Java的垃圾我们不需要管，但是垃圾收集之类的相关知识我们还是有必要了解一下的，做到知己知彼百战不殆。</p>
 <h2 id="回收算法简介"><a href="#回收算法简介" class="headerlink" title="回收算法简介"></a>回收算法简介</h2><ul>
 <li><p>标记清理算法</p>
 <p>  这个算法相对而言是最近简单的，标记阶段标识出哪些内存可以被清理，在清理阶段将这些内存清理掉。算法的优点显而易见–快速高效，但是缺点也比较明显，容易产生内存碎片，导致后续分配大对象空间的时候没有连续空间，进而引发Full GC。</p>
@@ -386,10 +385,13 @@
 <p>  标记整理算法算是标记清理算法和复制算法的结合体，在标记清理完垃圾内存后，会对存留下来的对象做一次整理，这样就能避免产生内存碎片的问题。</p>
 </li>
 </ul>
-<h2 id="结构分析"><a href="#结构分析" class="headerlink" title="结构分析"></a>结构分析</h2><p>目前广泛采用的Hotspot JVM主要把新生代内存分成三部分：一块Eden区和两块Survivor区（比例为8:1:1），一般情况下，新的对象都会被分配到Eden区，如果这个时候Eden区满了，就会发生一次Minor GC，还存活的对象将会被转移到Survivor区内，同一时间只有一个Survivor区会和Eden区配合使用，每次Minor GC之后，Survivor区内的对象如果没有被回收掉，它的年龄都会加一，直到一定阈值之后，它会被放到老年代中（默认16）</p>
-<p></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/04/Java重头再来-垃圾收集/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -552,8 +554,8 @@
         
           <p>串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。</p>
 <h3 id="串行"><a href="#串行" class="headerlink" title="串行"></a>串行</h3><p>指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。</p>
-<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>说到并行，首先得要知道<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4%E7%89%87" target="_blank" rel="noopener">CPU时间片</a>的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。</p>
-<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自身都带有多个CPU，所以多个任务可以分配给不同的CPU，由他们分别去处理。</p>
+<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>说到并行，首先得要知道<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4%E7%89%87" target="_blank" rel="noopener">CPU时间片</a>的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。</p>
+<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自身都带有多个CPU，所以多个任务可以分配给不同的CPU，由他们分别去处理。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/02/01/Java重头再来-内存模型/#more" rel="contents">

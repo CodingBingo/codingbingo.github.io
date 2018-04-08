@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并行说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并发并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
+<meta name="description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java重头再来-内存模型">
 <meta property="og:url" content="https://codingbingo.github.io/2018/02/01/Java重头再来-内存模型/index.html">
 <meta property="og:site_name" content="CodingBingo&#39;s Blog">
-<meta property="og:description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并行说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并发并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
+<meta property="og:description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/9.png">
 <meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/11.png">
 <meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/14.png">
-<meta property="og:updated_time" content="2018-02-01T08:41:52.767Z">
+<meta property="og:updated_time" content="2018-04-08T06:01:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java重头再来-内存模型">
-<meta name="twitter:description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并行说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并发并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
+<meta name="twitter:description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
 <meta name="twitter:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/9.png">
 
 
@@ -380,8 +380,8 @@
       
         <p>串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。</p>
 <h3 id="串行"><a href="#串行" class="headerlink" title="串行"></a>串行</h3><p>指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。</p>
-<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>说到并行，首先得要知道<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4%E7%89%87" target="_blank" rel="noopener">CPU时间片</a>的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。</p>
-<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自身都带有多个CPU，所以多个任务可以分配给不同的CPU，由他们分别去处理。</p>
+<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>说到并行，首先得要知道<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4%E7%89%87" target="_blank" rel="noopener">CPU时间片</a>的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。</p>
+<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自身都带有多个CPU，所以多个任务可以分配给不同的CPU，由他们分别去处理。</p>
 <a id="more"></a>
 <p>相对而言，其实并行和并发都是相对于多线程而言的，而在多线程编程过程中，主要有两个问题需要我们去解决：<strong>通信</strong>和<strong>同步</strong>。其中通信主要使用的是<strong>共享内存</strong>和<strong>消息传递</strong>，而同步主要分为<strong>显式同步</strong>和<strong>隐式同步</strong>。</p>
 <h2 id="Java内存模型（Java-memory-model-JMM"><a href="#Java内存模型（Java-memory-model-JMM" class="headerlink" title="Java内存模型（Java memory model, JMM)"></a>Java内存模型（Java memory model, JMM)</h2><p>Java中多线程采用的内存模型是共享内存模型，多线程中，JMM控制着一个线程对某个变量的修改对其他线程可见性。<br><img src="http://wiki.jikexueyuan.com/project/java-concurrent/images/9.png" alt="Java内存模型逻辑视图"><br>在Java中，每个线程都有自己的线程栈，保存着线程自身的本地变量、执行状态等信息，而每个线程栈只对自身可见，其他线程是不能访问的。所有的原始类型的变量都存放在线程栈上，对其他线程不可见。Java所有的对象都存放在堆上，线程的本地变量可以是那些对象的引用，所有有堆上对象的引用都可以访问堆上的对象，同时也包含对象的内部变量。<br><img src="http://wiki.jikexueyuan.com/project/java-concurrent/images/11.png" alt="示例"></p>
@@ -652,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#串行"><span class="nav-number">1.</span> <span class="nav-text">串行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行"><span class="nav-number">2.</span> <span class="nav-text">并行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发"><span class="nav-number">3.</span> <span class="nav-text">并发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java内存模型（Java-memory-model-JMM"><span class="nav-number"></span> <span class="nav-text">Java内存模型（Java memory model, JMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共享对象可见性"><span class="nav-number">1.</span> <span class="nav-text">共享对象可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile与synchronized"><span class="nav-number">2.</span> <span class="nav-text">volatile与synchronized</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#串行"><span class="nav-number">1.</span> <span class="nav-text">串行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发"><span class="nav-number">2.</span> <span class="nav-text">并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行"><span class="nav-number">3.</span> <span class="nav-text">并行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java内存模型（Java-memory-model-JMM"><span class="nav-number"></span> <span class="nav-text">Java内存模型（Java memory model, JMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共享对象可见性"><span class="nav-number">1.</span> <span class="nav-text">共享对象可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile与synchronized"><span class="nav-number">2.</span> <span class="nav-text">volatile与synchronized</span></a></li></ol></div>
             
 
           </div>
