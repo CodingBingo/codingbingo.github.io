@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="未来,个人感想," />
 
 
 
@@ -79,22 +79,18 @@
 
 
 
-<meta name="description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
-<meta name="keywords" content="Java">
+<meta name="description" content="Hello，25岁，不早也不迟，如约我来了！今天大概是我这些年来做的最重大的决定之一吧，我从阿里离职了，很感激这家公司曾经给我的一切，无论是从技术层面还是从人性的修炼上而言，都让我有很大程度上的提升。一路走来，还是很感激身边的所有的同事们，或许我不是很尊老，但是他们很爱幼，嘿嘿。孩子，也希望你在成长的道路上，也能像我这样，会遇到的人和事都很nice，愿你常怀一颗感恩之心。好啦，回过头来看看这一阶段">
+<meta name="keywords" content="未来,个人感想">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java从头再来-内存模型">
-<meta property="og:url" content="http://blog.codingbingo.cn/2018/02/01/Java从头再来-内存模型/index.html">
+<meta property="og:title" content="25岁写给未来孩纸的一封信">
+<meta property="og:url" content="http://blog.codingbingo.cn/2018/06/01/25岁写给未来孩纸的一封信/index.html">
 <meta property="og:site_name" content="CodingBingo&#39;s Blog">
-<meta property="og:description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
+<meta property="og:description" content="Hello，25岁，不早也不迟，如约我来了！今天大概是我这些年来做的最重大的决定之一吧，我从阿里离职了，很感激这家公司曾经给我的一切，无论是从技术层面还是从人性的修炼上而言，都让我有很大程度上的提升。一路走来，还是很感激身边的所有的同事们，或许我不是很尊老，但是他们很爱幼，嘿嘿。孩子，也希望你在成长的道路上，也能像我这样，会遇到的人和事都很nice，愿你常怀一颗感恩之心。好啦，回过头来看看这一阶段">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/9.png">
-<meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/11.png">
-<meta property="og:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/14.png">
-<meta property="og:updated_time" content="2018-04-08T09:06:49.586Z">
+<meta property="og:updated_time" content="2018-06-01T09:38:34.797Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java从头再来-内存模型">
-<meta name="twitter:description" content="串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。 串行指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。 并发说到并行，首先得要知道CPU时间片的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。 并行并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自">
-<meta name="twitter:image" content="http://wiki.jikexueyuan.com/project/java-concurrent/images/9.png">
+<meta name="twitter:title" content="25岁写给未来孩纸的一封信">
+<meta name="twitter:description" content="Hello，25岁，不早也不迟，如约我来了！今天大概是我这些年来做的最重大的决定之一吧，我从阿里离职了，很感激这家公司曾经给我的一切，无论是从技术层面还是从人性的修炼上而言，都让我有很大程度上的提升。一路走来，还是很感激身边的所有的同事们，或许我不是很尊老，但是他们很爱幼，嘿嘿。孩子，也希望你在成长的道路上，也能像我这样，会遇到的人和事都很nice，愿你常怀一颗感恩之心。好啦，回过头来看看这一阶段">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.codingbingo.cn/2018/02/01/Java从头再来-内存模型/"/>
+  <link rel="canonical" href="http://blog.codingbingo.cn/2018/06/01/25岁写给未来孩纸的一封信/"/>
 
 
 
 
 
-  <title>Java从头再来-内存模型 | CodingBingo's Blog</title>
+  <title>25岁写给未来孩纸的一封信 | CodingBingo's Blog</title>
   
 
 
@@ -277,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.codingbingo.cn/2018/02/01/Java从头再来-内存模型/">
+    <link itemprop="mainEntityOfPage" href="http://blog.codingbingo.cn/2018/06/01/25岁写给未来孩纸的一封信/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CodingBingo">
@@ -294,7 +290,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java从头再来-内存模型</h2>
+          <h2 class="post-title" itemprop="name headline">25岁写给未来孩纸的一封信</h2>
         
 
         <div class="post-meta">
@@ -306,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-01T14:42:25+08:00">
-                2018-02-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-01T14:57:42+08:00">
+                2018-06-01
               </time>
             
 
@@ -329,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/给未来的孩子/" itemprop="url" rel="index">
+                    <span itemprop="name">给未来的孩子</span>
                   </a>
                 </span>
 
@@ -347,9 +343,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/02/01/Java从头再来-内存模型/#comments" itemprop="discussionUrl">
+                <a href="/2018/06/01/25岁写给未来孩纸的一封信/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/02/01/Java从头再来-内存模型/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/06/01/25岁写给未来孩纸的一封信/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -357,7 +353,7 @@
 
           
           
-             <span id="/2018/02/01/Java从头再来-内存模型/" class="leancloud_visitors" data-flag-title="Java从头再来-内存模型">
+             <span id="/2018/06/01/25岁写给未来孩纸的一封信/" class="leancloud_visitors" data-flag-title="25岁写给未来孩纸的一封信">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -388,20 +384,7 @@
       
 
       
-        <p>串行、并行、并发这三个词语相比对大多数的程序员应该都不陌生了，但是很多人却不能很好的区分三者之间的区别，今天要讲内存模型，那就先说一下这三个概念吧。</p>
-<h3 id="串行"><a href="#串行" class="headerlink" title="串行"></a>串行</h3><p>指的是各个线程依次执行，只有CPU处理完了前面的任务才会去处理下一条任务。</p>
-<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>说到并行，首先得要知道<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4%E7%89%87" target="_blank" rel="noopener">CPU时间片</a>的概念，并行就是指CPU不断在各个线程之间来回切换执行相应的任务。</p>
-<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>并发相对前两者而言，是依托于多CPU而言的，由于现在计算机自身都带有多个CPU，所以多个任务可以分配给不同的CPU，由他们分别去处理。</p>
-<a id="more"></a>
-<p>相对而言，其实并行和并发都是相对于多线程而言的，而在多线程编程过程中，主要有两个问题需要我们去解决：<strong>通信</strong>和<strong>同步</strong>。其中通信主要使用的是<strong>共享内存</strong>和<strong>消息传递</strong>，而同步主要分为<strong>显式同步</strong>和<strong>隐式同步</strong>。</p>
-<h2 id="Java内存模型（Java-memory-model-JMM"><a href="#Java内存模型（Java-memory-model-JMM" class="headerlink" title="Java内存模型（Java memory model, JMM)"></a>Java内存模型（Java memory model, JMM)</h2><p>Java中多线程采用的内存模型是共享内存模型，多线程中，JMM控制着一个线程对某个变量的修改对其他线程可见性。<br><img src="http://wiki.jikexueyuan.com/project/java-concurrent/images/9.png" alt="Java内存模型逻辑视图"><br>在Java中，每个线程都有自己的线程栈，保存着线程自身的本地变量、执行状态等信息，而每个线程栈只对自身可见，其他线程是不能访问的。所有的原始类型的变量都存放在线程栈上，对其他线程不可见。Java所有的对象都存放在堆上，线程的本地变量可以是那些对象的引用，所有有堆上对象的引用都可以访问堆上的对象，同时也包含对象的内部变量。<br><img src="http://wiki.jikexueyuan.com/project/java-concurrent/images/11.png" alt="示例"></p>
-<h3 id="共享对象可见性"><a href="#共享对象可见性" class="headerlink" title="共享对象可见性"></a>共享对象可见性</h3><p>现在计算机，基本都有很多个CPU，同时为了缓解CPU和存储直接过大速度差异，每个CPU都会配备若干个寄存器，也就是说可能存在一种情况下，某个线程更新了某个值，但是这个值还放在寄存器里面，没有刷新到主存中，导致下一个线程取内存中的值还是之前的值。<br><img src="http://wiki.jikexueyuan.com/project/java-concurrent/images/14.png" alt="共享对象可见性"><br>在Java里面，主要提供了两个方式去解决这个问题，一个是<strong>volatile</strong>和<strong>同步代码块</strong>。其中<strong>volatile</strong>关键字保证某个对象发生更改之后会立即更新回主存当中。而同步代码块主要保证同一时间只有一个线程进入<a href="https://zh.wikipedia.org/wiki/%E8%87%A8%E7%95%8C%E5%8D%80%E6%AE%B5" target="_blank" rel="noopener">临界区</a>。</p>
-<h3 id="volatile与synchronized"><a href="#volatile与synchronized" class="headerlink" title="volatile与synchronized"></a>volatile与synchronized</h3><ul>
-<li>volatile仅仅保证操作针对的是同一块内存，不保证复合操作的原子性；而synchronized保证修改变量的可见性和原子性。</li>
-<li>volatile不会造成线程的阻塞；synchronized会造成线程的阻塞。</li>
-<li>volatile标记的变量不会被编译器优化；synchronized修饰的还是会被编译器优化。</li>
-<li>synchronized的性能开销会比volatile高很多。</li>
-</ul>
+        <p>Hello，25岁，不早也不迟，如约我来了！<br>今天大概是我这些年来做的最重大的决定之一吧，我从阿里离职了，很感激这家公司曾经给我的一切，无论是从技术层面还是从人性的修炼上而言，都让我有很大程度上的提升。一路走来，还是很感激身边的所有的同事们，或许我不是很尊老，但是他们很爱幼，嘿嘿。孩子，也希望你在成长的道路上，也能像我这样，会遇到的人和事都很nice，愿你常怀一颗感恩之心。<br>好啦，回过头来看看这一阶段的我吧，但愿在你看来，这一阶段的我是没有被荒废的，这一阶段的我的每一个决定都是正确的。<br>13年下半年，也就是上一封信的同年，我申请从软件工程专业转到卓越学院，那会儿说实话，有过犹豫，有过徘徊，有时候心里也在想—“你觉得这个地方（软件工程学院）差，或许你去那个地方不见得会好。”现在的我已经记不清楚当初的自己到底还想了些啥了，后面就是申请了转学院，接下来就是面试啦，我记得当初面试的时候，有个老师问我从我入学以来，我一共写了多少代码，我说大概3万行吧，然后我就以最低的学分被录取了。我记得我的第一台电脑是从小兰姐家拿来的很老的一台sony的上网本，电池没有，键盘坏的，就是这样的一台电脑，我第一年靠着他写了3万行代码，后来缠着我妈妈花了3900块买了一台华硕的电脑，孩子，希望未来的你能找到自己的兴趣所在，并为之努力。<br>转到卓越学院后，感谢同学和老师们，给我“大开方便之门”，让我逃掉了很多我那时觉得无所谓的课程，但是现在看起来，那时的自己还是有点幼稚的。后来学院给我申请了一个专门的实验室，那应该是我大学呆的最久的一个地方吧，我几乎所有的闲暇时间都呆在实验室。然后边学习边做一些练手的项目，后来遇到僧老师，开始带我做一些外包项目，忽然发现，原来我是可以通过自己所学所能为家里分担一些负担的，从那以后我基本没从家里拿过钱了，我记得那个时候，第一次拿到1000的工资的时候，陪我妈妈逛了商场买了一些东西好像，觉得自己好像忽然长大了一样。孩子，我想说的不是希望未来的你的第一笔工资要给我买礼物啥的，只是希望你能勇敢的去做你喜欢的事情，总会有一点成绩的，或许这就叫天道酬勤吧。<br>后面的日子做了不少外包，也赚了不少钱，给自己换了手机、电脑，在姐姐出嫁的时候，我拿出来我身上仅剩的10000块钱，给她做嫁妆。想起来还是挺想哭的，以前每年都是一家四口人过年，忽然就剩下三个人过年了，冷清了好多，爸妈虽然说没啥，但是心里肯定和我一样，还是很多不舍的。孩子，现在的我不清楚未来的你会不会有兄弟姐妹，但是希望你能珍视你生命中的每一个人，人生就是这样，总有人要逐渐远去。<br>14年开年的时候，马上一大帮人毕业了，每天会有收破烂的大爷大妈在楼底，等待那些即将毕业的学子们把过去的课本当成废品卖给他们，那个时候我又突发奇想，去联系他们把那些收购的书本买回来（孩子，可能你会问我为啥不直接在学校里收，但是我要告诉你的是，学校某些部门不会让你这么干的，慢慢的你会懂的，这就是社会！），然后出售给那些需要他们的学弟学妹们。当时我记得我当初是以每本书一块钱左右的价格收过来的，大概4000本吧，那个时候我们叫了一辆卡车，装的满满一卡车，然后搬到学校的实验室里面，依稀记得那时的自己，累并快乐着。孩子，希望你也能为你自己想做的事情去努力，去累并快乐着。<br>14年的夏天，我和超哥买了辆“豪车”，我们花了2400块买了两辆山地车，准备从杭州骑行去厦门。一路上，我睡过路边、桥下、河边等等。我们花了12天左右从杭州骑行到厦门，全程2100公里左右，中过署，断过粮，缺过水，也在某个半山腰叫天天不应，叫地地不灵，只能硬着头皮透推这沉重的车和行李上山。路上遇到过邀请我们进去喝水吹风扇的小夫妻；遇到过一位大哥哥，陪我们骑了200公里，请我们吃饭住酒店；遇到一位温州那边的叔叔，陪我们一直骑行到厦门，一路上给我们分享他过往的人生经历。很感谢超哥一路上的扶持，感谢路上遇到的所有的人，感谢路上经过所有的美景。孩子，希望未来的你在人生的路途中，可能会有各种困难险阻，但希望你不轻言放弃，希望你会有个人像超哥那样，一直相互扶持，希望你的路上也会遇到那些愿意帮助你的人。<br>15年开年，大三下半年了，我的大学生涯也快步入结束了，回首过去的时间，每天上完课，然后就钻到实验室，晚上总是等到寝室要关门才回去。如果杭州的夜空能看到星星的话，我相信，每天都是繁星伴着我回去吧。这个时候，就要面对一个比较重大的决定，是读研还是去工作了。那时候其实我没有太大的犹豫，因为我确实不太喜欢每天坐在那，像高三那样，于是我就开始制作简历，投简历准备面试了。说到面试，还真是有个比较有趣的东西，就是一开始投阿里的时候，我投的是安全的，那时候的我看来，我希望去尝试一些不同的领域，于是乎，理所当然的挂了。后面我重新摆正了一下姿态，去投自己比较擅长的方向，客户端开发，经历过几轮面试之后就拿到offer了。那时候的我，就只投了阿里的简历，好像有种孤注一掷的感觉。<br>后面就是来支付宝这边实习了，当时还有个研究生学姐提前来支付宝实习了，世界真的很小，刚好那时候的我们刚好坐在对面。每天一大早，我们赶地铁、赶公交，从遥远的下沙，两个小时的路程，来到支付宝大楼。晚上再赶末班车回学校，在末班的地铁上睡着被乘务员叫醒：“嘿，小伙子，到站啦！到站啦！”。然后一路飞奔跑到寝室，有时候回来晚了，会爬寝室楼的水管爬上二楼走上去。也有时候把刚刚睡着的阿姨叫醒，那个时候，每个寝室楼总会有两个阿姨，一个好阿姨，一个“坏阿姨”，总是会“骂骂咧咧”的给我开门。然后黑灯瞎火的在寝室洗漱。你要问我累不累，那肯定累的，但是还是很开心和自豪的。所以孩子，希望你能找到那么一个地方或事情，他能给你你所有的期待。<br>实习快结束的时候，我记得那个时候，刚好学校选举公派去巴黎交流访学的项目，我记得我是在项目截至日期的时候才提交材料的，因为一开始的时候，我觉得我自己的能力可能不够标准，但是我们的辅导员何老师鼓励我去试试。我记得那个时候，上午在公司完成实习转正面试，下午跑回学校开始公派交流访学的面试，很幸运，被这个项目选上了。当时面试的时候，因为那边的老师可能比较需要一个偏向编程实践的学生，然后我就以最低学分被选上了。那段时间，我的小外甥女出生了，我真的很开心，从此我们家又多了一个小屁孩，赶在出国前夕，我买车票去看了一下糖糖，当我第一次抱着这个幼小的生命的时候，我似乎有些想哭，愿我们能守护你安静长大。孩子，或许在未来的某个时候，你也会来到我眼前，但愿那个时候我是有能力去守护你的，但愿这辈子，你不后悔跟我来到这个世界。<br>那年中秋节的时候，我们坐飞机飞往巴黎，那是我迄今为止这辈子离家最远的一次，从飞机的屏幕上看，当飞机从中国上空飞过的时候，我竟有些许想哭，那个时候我才知道，原来这就叫祖国。到了巴黎，你会发现，你与那边的一切是那么“格格不入”，早上去了就喝咖啡；地铁还能罢工；看病需要预约；还会有暴恐事件……在那边，我努力发挥自己的专长，努力完成实验室老师交给我的任务，搭建了一个给阿尔兹海默症病人使用的平台，在我做演完演示的ppt的时候，我知道，这一程，我交了一份满意的答卷。对啦，那个时候也还有一个比较重要的选择，就是要不要选择在那边读研究生，当时带我的那个导师给我说，如果我决定来读的话，会帮我申请奖学金，如你所知，我最后还是选择回国了，哎。孩子，我希望以后的你，不会畏惧选择，希望以后的我不会给你带来顾虑，希望以后的你的每一份决定，都会有我在背后支持着你。<br>回来了以后，大学也快结束了，也还差最后一个事情没有做完，那就是进行一次徒步。于是我准备好装备，从杭州坐车去昆明，然后开始徒步去往大理、丽江，一路上遇到了不少有趣的人，见过我不曾见过的美景，人生嘛，就应该有一次说走就走的旅行。<br>然后就被师兄“催着”来支付宝上班啦，来公司快两年了，感谢这个平台给了我对大公司所有的期待！说实话，要走的时候还是会有很多不舍的。兢兢业业的师兄、温婉的莫老师、帅气的远尘、程咬金等等，我很感激大家对我的照顾与帮助。但是这么长时间，我总有种缺憾，会觉得似乎缺少了些什么，觉得自己想去闯一闯，想去干点什么，让这个世界留下点我存在的痕迹，那些年吹过的牛逼，总是要去实现的！孩子，还是希望你，在未来的人生旅途里，翻越千山万水，归来仍是少年。</p>
 
       
     </div>
@@ -451,7 +434,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://blog.codingbingo.cn/2018/02/01/Java从头再来-内存模型/" title="Java从头再来-内存模型">http://blog.codingbingo.cn/2018/02/01/Java从头再来-内存模型/</a>
+    <a href="http://blog.codingbingo.cn/2018/06/01/25岁写给未来孩纸的一封信/" title="25岁写给未来孩纸的一封信">http://blog.codingbingo.cn/2018/06/01/25岁写给未来孩纸的一封信/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -466,7 +449,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/未来/" rel="tag"># 未来</a>
+          
+            <a href="/tags/个人感想/" rel="tag"># 个人感想</a>
           
         </div>
       
@@ -494,8 +479,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/07/Java从头再来-String/" rel="next" title="Java从头再来-String">
-                <i class="fa fa-chevron-left"></i> Java从头再来-String
+              <a href="/2018/04/13/Java从头再来-并发/" rel="next" title="Java从头再来-并发">
+                <i class="fa fa-chevron-left"></i> Java从头再来-并发
               </a>
             
           </div>
@@ -503,10 +488,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/04/Java从头再来-垃圾收集/" rel="prev" title="Java从头再来-垃圾收集">
-                Java从头再来-垃圾收集 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -568,17 +549,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -652,22 +624,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#串行"><span class="nav-number">1.</span> <span class="nav-text">串行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发"><span class="nav-number">2.</span> <span class="nav-text">并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行"><span class="nav-number">3.</span> <span class="nav-text">并行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java内存模型（Java-memory-model-JMM"><span class="nav-number"></span> <span class="nav-text">Java内存模型（Java memory model, JMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共享对象可见性"><span class="nav-number">1.</span> <span class="nav-text">共享对象可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile与synchronized"><span class="nav-number">2.</span> <span class="nav-text">volatile与synchronized</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -838,9 +794,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://blog.codingbingo.cn/2018/02/01/Java从头再来-内存模型/';
-          this.page.identifier = '2018/02/01/Java从头再来-内存模型/';
-          this.page.title = 'Java从头再来-内存模型';
+          this.page.url = 'http://blog.codingbingo.cn/2018/06/01/25岁写给未来孩纸的一封信/';
+          this.page.identifier = '2018/06/01/25岁写给未来孩纸的一封信/';
+          this.page.title = '25岁写给未来孩纸的一封信';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://codingbingo-github-io.disqus.com/embed.js';
