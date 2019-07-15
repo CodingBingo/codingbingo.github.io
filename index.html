@@ -371,8 +371,7 @@
 
       
         
-          
-            <p>从公司创立以来已经一年有余，Feed流系统数据量也涨到了8个亿的数据量，对Feed流系统的优化工作也在不断地进行着。</p>
+          <p>从公司创立以来已经一年有余，Feed流系统数据量也涨到了8个亿的数据量，对Feed流系统的优化工作也在不断地进行着。</p>
 <h3 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h3><p>当前公司Feed流系统主要采用的是写扩散的模式进行的，总体的数据量为8亿左右。目前使用的是MySQL数据库、Mycat做中间件，以user_id为主键把动态可见性(feed_visible)这张表拆成了单库10张表，也就是每张表数据量大约为8千万(事实证明MySQL的性能只要优化上下足功夫，性能还是很不错的)。</p>
 <h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><h4 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h4><p>目前大家使用的最多的存储引擎主要是<strong>InnoDB</strong>和<strong>MyISAM</strong>。</p>
 <blockquote>
@@ -382,60 +381,14 @@
 <blockquote>
 <p>  Hash索引适合做等值查询，但是无法利用索引进行范围查询，同时大量重复的键值因为存在哈希碰撞导致hash索引的效率比较低。B+ Tree本身是一种多路平衡查询树(左子节点 &lt; 父节点 &lt; 右子节点)。</p>
 </blockquote>
-<h4 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h4><p>InnoDB中我们常用的B+ Tree存储的有可能是完整的记录值也有可能是主键的值。对于存储完整的记录的索引(主索引)我们称之为聚簇索引，存储了主键值的索引(辅助索引)我们称之为非聚簇索引。如果我们查询中使用的是辅助索引，那么一些情况下会需要拿到查询后的主键值回表查询多次(我们成这个过程叫回表)。</p>
-<h4 id="联合索引及左前缀匹配"><a href="#联合索引及左前缀匹配" class="headerlink" title="联合索引及左前缀匹配"></a>联合索引及左前缀匹配</h4><p>一般情况下我们在正常的业务时，很多场景下是无法总是使用主键作为查询条件的，所以这个时候我们通常会创建联合索引以提高我们查询的速度。<br><img src="https://i.imgur.com/vUQ8KOi.png" alt="联合索引结构"><br>如上所示，假设我们的联合索引为(col1, col2, col3)，那么我们在实际使用的相当于创建了三个索引(col1)、(col1, col2)、(col1, col2, col3)三个索引，这个就是左前缀匹配原则。但是这个也要求我们在查询时在where语句中严格遵循col1、col2、col3的循序进行查询。</p>
-<blockquote>
-<p>前面我们提及回表的时候有说过，有些场景下我们需要数据需要先查询辅助索引，然后再回表查询到相应的数据，但是有些场景下我们是可以直接通过索引拿到我们需要的数据的，如我们有(col1, col2)联合索引，这个时候我们如果需要通过col1查询到col2的时候，是不需要再进行回表操作了，这种我们称之为<strong>覆盖索引</strong>。</p>
-</blockquote>
-<h3 id="常用优化"><a href="#常用优化" class="headerlink" title="常用优化"></a>常用优化</h3><ul>
-<li>去掉隐式转化<br>  查询sql中，如果有字段为varchar字段，而查询的时候使用的确实int型的参数，那么这个时候索引会失效。</li>
-<li>去掉索引列参与计算</li>
-<li>避免使用!= 或 &lt;&gt; 操作符</li>
-<li>避免对字段进行null判断</li>
-<li>指定返回的列名</li>
-<li>使用union代替or、尽量用union all代替union</li>
-<li>避免order by非索引字段</li>
-<li>使用exists 代替 in</li>
-<li>能用distinct就不用group by</li>
-</ul>
-<h3 id="Explain解释执行"><a href="#Explain解释执行" class="headerlink" title="Explain解释执行"></a>Explain解释执行</h3><p>一般情况下，如果系统中有慢SQL，可以把这条SQL单独拿出来，使用MySQL的explain命令查看具体的执行情况。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">explain</span> </span><br><span class="line"><span class="keyword">select</span> feedId, recordTime <span class="keyword">from</span> feed_visiable_8 <span class="keyword">where</span> userId=<span class="string">"44468"</span> <span class="keyword">and</span> <span class="keyword">organization</span>=<span class="string">"CLASS-859"</span> <span class="keyword">and</span> (expireTime <span class="keyword">is</span> <span class="literal">null</span> <span class="keyword">or</span> expireTime &gt; <span class="keyword">now</span>())</span><br><span class="line"><span class="keyword">union</span> all</span><br><span class="line"><span class="keyword">select</span> feedId, recordTime <span class="keyword">from</span> feed_visiable_8 <span class="keyword">where</span> userId=<span class="string">"44468"</span> <span class="keyword">and</span> sub_organization=<span class="string">"CLASS-859"</span> <span class="keyword">and</span> (expireTime <span class="keyword">is</span> <span class="literal">null</span> <span class="keyword">or</span> expireTime &gt; <span class="keyword">now</span>()) </span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> recordTime <span class="keyword">desc</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h4><ul>
-<li>SIMPLE</li>
-<li>PRIMARY</li>
-<li>UNION</li>
-<li>DEPENDENT UNION</li>
-<li>UNION RESULT</li>
-<li>SUBQUERY</li>
-<li>DEPENDENT SUBQUERY</li>
-<li>DERIVED</li>
-</ul>
-<h4 id="type"><a href="#type" class="headerlink" title="type"></a>type</h4><ul>
-<li>system</li>
-<li>const</li>
-<li>eq_ref</li>
-<li>ref</li>
-<li>ref_or_null</li>
-<li>index_merge</li>
-<li>unique_subquery</li>
-<li>index_subquery</li>
-<li>range<br>  只检索指定范围的行。</li>
-<li>index<br>  查询只是用单索引的一部分的时候。</li>
-<li>ALL<br>  全表扫描，这种是我们一定要避免的。</li>
-</ul>
-<h4 id="possible-keys"><a href="#possible-keys" class="headerlink" title="possible_keys"></a>possible_keys</h4><p>possible_keys列出MySQL可能使用的索引列表。但是最终执行的情况要取决于MySQL的优化执行器的选择。</p>
-<h4 id="key"><a href="#key" class="headerlink" title="key"></a>key</h4><p>MySQL当前查询实际使用的索引。如果没有选择索引，则此值为NULL。</p>
-<h4 id="key-len"><a href="#key-len" class="headerlink" title="key_len"></a>key_len</h4><h4 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h4><h4 id="rows"><a href="#rows" class="headerlink" title="rows"></a>rows</h4><p>MySQL认为它执行查询时必须检查的行数。<strong>通常这个行数越小越好</strong></p>
-<h4 id="Extra"><a href="#Extra" class="headerlink" title="Extra"></a>Extra</h4><ul>
-<li>Distinct<br>  一旦MYSQL找到了与行相联合匹配的行，就不再搜索了。</li>
-<li>Not exists<br>  MYSQL优化了LEFT JOIN，一旦它找到了匹配LEFT JOIN标准的行。</li>
-<li>Range checked for each<br>  没有找到理想的索引，因此对于从前面表中来的每一个行组合，MYSQL检查使用哪个索引，并用它来从表中返回行。这是使用索引的最慢的连接之一。</li>
-<li>Using filesort<br>  MYSQL需要进行额外的步骤来发现如何对返回的行排序。它根据连接类型以及存储排序键值和匹配条件的全部行的行指针来排序全部行。我们优化的时候有遇到相关的情况发生，这里我们的做法是根据业务看仅返回索引字段是否能满足业务。<strong>需要优化</strong></li>
-<li>Using index<br>  列数据是从仅仅使用了索引中的信息而没有读取实际的行动的表返回的，这发生在对表的全部的请求列都是同一个索引的部分的时候。</li>
-<li>Using temporary<br>  MYSQL需要创建一个临时表来存储结果，这通常发生在对不同的列集进行ORDER BY上，而不是GROUP BY上。<strong>需要优化</strong></li>
-<li>Using where<br>  使用了WHERE从句来限制哪些行将与下一张表匹配或者是返回给用户。如果不想返回表中的全部行，并且连接类型ALL或index。</li>
-</ul>
-
-          
+<h4 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h4><p>InnoDB中我们常用的B+ Tree存储的有可能是完整的记录值也有可能是主键的值。对于存储完整的记录的索引(主索引)我们称之为聚簇索引，存储了主键值的索引(辅助索引)我们称之为非聚簇索引。如果我们查询中使用的是辅助索引，那么一些情况下会需要拿到查询后的主键值回表查询多次(我们成这个过程叫回表)。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/13/线上Feed流系统Mysql调优/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

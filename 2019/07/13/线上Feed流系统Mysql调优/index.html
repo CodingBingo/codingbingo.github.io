@@ -87,7 +87,7 @@
 <meta property="og:description" content="从公司创立以来已经一年有余，Feed流系统数据量也涨到了8个亿的数据量，对Feed流系统的优化工作也在不断地进行着。 现状当前公司Feed流系统主要采用的是写扩散的模式进行的，总体的数据量为8亿左右。目前使用的是MySQL数据库、Mycat做中间件，以user_id为主键把动态可见性(feed_visible)这张表拆成了单库10张表，也就是每张表数据量大约为8千万(事实证明MySQL的性能只要优">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/vUQ8KOi.png">
-<meta property="og:updated_time" content="2019-07-15T06:29:17.567Z">
+<meta property="og:updated_time" content="2019-07-15T06:40:53.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线上Feed流系统Mysql调优">
 <meta name="twitter:description" content="从公司创立以来已经一年有余，Feed流系统数据量也涨到了8个亿的数据量，对Feed流系统的优化工作也在不断地进行着。 现状当前公司Feed流系统主要采用的是写扩散的模式进行的，总体的数据量为8亿左右。目前使用的是MySQL数据库、Mycat做中间件，以user_id为主键把动态可见性(feed_visible)这张表拆成了单库10张表，也就是每张表数据量大约为8千万(事实证明MySQL的性能只要优">
@@ -383,7 +383,7 @@
 <blockquote>
 <p>  Hash索引适合做等值查询，但是无法利用索引进行范围查询，同时大量重复的键值因为存在哈希碰撞导致hash索引的效率比较低。B+ Tree本身是一种多路平衡查询树(左子节点 &lt; 父节点 &lt; 右子节点)。</p>
 </blockquote>
-<h4 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h4><p>InnoDB中我们常用的B+ Tree存储的有可能是完整的记录值也有可能是主键的值。对于存储完整的记录的索引(主索引)我们称之为聚簇索引，存储了主键值的索引(辅助索引)我们称之为非聚簇索引。如果我们查询中使用的是辅助索引，那么一些情况下会需要拿到查询后的主键值回表查询多次(我们成这个过程叫回表)。</p>
+<h4 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h4><p>InnoDB中我们常用的B+ Tree存储的有可能是完整的记录值也有可能是主键的值。对于存储完整的记录的索引(主索引)我们称之为聚簇索引，存储了主键值的索引(辅助索引)我们称之为非聚簇索引。如果我们查询中使用的是辅助索引，那么一些情况下会需要拿到查询后的主键值回表查询多次(我们成这个过程叫回表)。<br><a id="more"></a></p>
 <h4 id="联合索引及左前缀匹配"><a href="#联合索引及左前缀匹配" class="headerlink" title="联合索引及左前缀匹配"></a>联合索引及左前缀匹配</h4><p>一般情况下我们在正常的业务时，很多场景下是无法总是使用主键作为查询条件的，所以这个时候我们通常会创建联合索引以提高我们查询的速度。<br><img src="https://i.imgur.com/vUQ8KOi.png" alt="联合索引结构"><br>如上所示，假设我们的联合索引为(col1, col2, col3)，那么我们在实际使用的相当于创建了三个索引(col1)、(col1, col2)、(col1, col2, col3)三个索引，这个就是左前缀匹配原则。但是这个也要求我们在查询时在where语句中严格遵循col1、col2、col3的循序进行查询。</p>
 <blockquote>
 <p>前面我们提及回表的时候有说过，有些场景下我们需要数据需要先查询辅助索引，然后再回表查询到相应的数据，但是有些场景下我们是可以直接通过索引拿到我们需要的数据的，如我们有(col1, col2)联合索引，这个时候我们如果需要通过col1查询到col2的时候，是不需要再进行回表操作了，这种我们称之为<strong>覆盖索引</strong>。</p>
